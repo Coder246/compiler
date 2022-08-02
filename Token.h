@@ -16,6 +16,7 @@ public:
     std::string toString();
     std::string TokenTypeToString(TokenType type);
 
+
 private:
     TokenType type;
     std::string value;
@@ -26,6 +27,8 @@ public:
     int getLine() const;
 
     int getPos() const;
+
+    void setType(TokenType type);
 
 
 };

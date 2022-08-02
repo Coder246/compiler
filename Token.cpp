@@ -137,3 +137,7 @@ switch (type) {
 
 };
 }
+
+void Token::setType(TokenType type) {
+    Token::type = type;
+}

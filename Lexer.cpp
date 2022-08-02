@@ -312,11 +312,6 @@ char Lexer::nextChar() {
 }
 
 bool Lexer::next() {
-    this->counter++;
-
-    if (this->counter >= this->source.length()) {
-        return false;
-    }
 
     if (this->source[this->counter] == '\n') {
         this->line++;
@@ -324,6 +319,14 @@ bool Lexer::next() {
     } else {
         this->pos++;
     }
+
+    this->counter++;
+
+    if (this->counter >= this->source.length()) {
+        return false;
+    }
+
+
 
 
     return true;
