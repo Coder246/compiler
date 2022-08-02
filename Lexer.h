@@ -36,6 +36,8 @@ public:
     char currentChar();
 
     bool charIsAlphaNumeric(char i);
+
+    void filterKeywords(std::string ind);
 };
 
 

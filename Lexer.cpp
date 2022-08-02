@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include "Lexer.h"
+#include "Keywords.h"
 
 void Lexer::lex(const std::string &input) {
     this->length = input.length();
@@ -268,8 +269,7 @@ void Lexer::lex(const std::string &input) {
                 this->next();
                 c = this->currentChar();
             }
-
-            this->addToken(TokenType::TOKEN_IDENTIFIER, identifier);
+            this->filterKeywords(identifier);
         } else {
             this->next();
         }
@@ -421,6 +421,17 @@ bool Lexer::charIsAlpha(char c) {
 
 bool Lexer::charIsAlphaNumeric(char i) {
     return this->charIsDigit(i) || this->charIsAlpha(i);
+}
+
+void Lexer::filterKeywords(std::string identifier) {
+
+    for (Keyword *item: KEYWORDS) {
+        if (identifier == item->getValue()) {
+            this->addToken(TokenType::TOKEN_KEYWORD, item->getValue());
+            return;
+        }
+    }
+    this->addToken(TokenType::TOKEN_IDENTIFIER, identifier);
 }
 
 

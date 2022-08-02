@@ -127,6 +127,8 @@ switch (type) {
         return "TOKEN_BITWISE_XOR";
     case TOKEN_NUMBER:
         return "TOKEN_NUMBER";
+    case TOKEN_KEYWORD:
+        return "TOKEN_KEYWORD";
 
     default:
         return "UNKNOWN";
