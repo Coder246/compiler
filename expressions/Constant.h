@@ -20,6 +20,8 @@ public:
 
 private:
     int value;
+    std::string getType() override;
+
 };
 
 

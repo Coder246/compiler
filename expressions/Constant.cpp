@@ -15,3 +15,7 @@ int Constant::getValue() const {
 void Constant::setValue(int value) {
     Constant::value = value;
 }
+
+std::string Constant::getType() {
+    return "Constant";
+}

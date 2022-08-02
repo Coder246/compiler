@@ -6,6 +6,8 @@
 #include "Parser.h"
 #include "expressions/Condition.h"
 #include "expressions/Constant.h"
+#include "Keywords.h"
+#include "statements/IFStatement.h"
 
 void Parser::parse(std::vector<Token> tokens) {
 
@@ -14,17 +16,8 @@ void Parser::parse(std::vector<Token> tokens) {
     while(this->tokens.size()>this->counter) {
         Token token = this->tokens.at(this->counter);
 
-        if(token.getType() == TokenType::TOKEN_KEYWORD) {
-
-            if(token.getValue() == "if") {
-                this->IFStatementParser(token);
-            }
-
-
-        }else{
-            std::cout << "Error: " << token.getValue() << " is not a statement " << token.getLine() << ":" << token.getPos() << std::endl;
-        }
-
+        IFStatement * top = static_cast<IFStatement *>(this->parseToken(token));
+        top->getIfBody().at(0)->getType();
 
         this->counter++;
     }
@@ -32,7 +25,9 @@ void Parser::parse(std::vector<Token> tokens) {
 
 }
 
-void Parser::IFStatementParser(Token iftoken) {
+
+//todo be less restrictive and parse expression universally
+Statement * Parser::IFStatementParser(Token iftoken) {
     std::cout << "IFStatementParser" << std::endl;
     next();
     if(this->getCurrentToken().getType()!=TokenType::TOKEN_LEFT_BRACKET) std::cout << "Error: ( expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
@@ -43,7 +38,27 @@ void Parser::IFStatementParser(Token iftoken) {
     next();
     if(this->getCurrentToken().getType()!=TokenType::TOKEN_LEFT_CURLY) std::cout << "Error: { expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
     next();
-    //TODO parse code
+    currentDepth++;
+    std::vector<Statement*> ifBody = parseUntilCurlyBracket(this->getCurrentToken(),currentDepth);
+    currentDepth--;
+    if(this->getCurrentToken().getType()!=TokenType::TOKEN_RIGHT_CURLY) std::cout << "Error: } expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
+    next();
+    if(this->getCurrentToken().getValue()==KEYWORD_ELSE.getValue()) {
+        std::cout << "ELSE detected" << std::endl;
+        next();
+        if(this->getCurrentToken().getType()!=TokenType::TOKEN_LEFT_CURLY) std::cout << "Error: { expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
+        next();
+        currentDepth++;
+        std::vector<Statement *> elseBody = parseUntilCurlyBracket(this->getCurrentToken(),currentDepth);
+        currentDepth--;
+        if(this->getCurrentToken().getType()!=TokenType::TOKEN_RIGHT_CURLY) std::cout << "Error: } expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
+        next();
+        return new IFStatement(condition,ifBody, elseBody);
+    }else{
+        std::vector<Statement *> elseBody;
+        return new IFStatement(condition,ifBody, elseBody);
+    }
+
 }
 
 Condition *Parser::parseCondition(Token token) {
@@ -105,10 +120,46 @@ Condition *Parser::parseCondition(Token token) {
 
 void Parser::next() {
     this->counter++;
+}
 
+Statement * Parser::parseToken(Token token) {
+    if(token.getType() == TokenType::TOKEN_KEYWORD) {
+
+        if(token.getValue() == "if") {
+           return this->IFStatementParser(token);
+        }else{
+            std::cout << "Error: " << token.getValue() << " is not implemented " << token.getLine() << ":" << token.getPos() << std::endl;
+            next();
+
+            return nullptr;
+        }
+
+
+    }else{
+        std::cout << "Error: " << token.getValue() << " is not a statement " << token.getLine() << ":" << token.getPos() << std::endl;
+        next();
+        return nullptr;
+    }
 
 }
 
 Token Parser::getCurrentToken() {
+    //if counter is bigger than tokens size, return empty token
+    if(this->counter>=this->tokens.size())
+        return Token(TokenType::TOKEN_EOF,"",0,0);
+
     return this->tokens.at(this->counter);
+}
+
+std::vector<Statement*> Parser::parseUntilCurlyBracket(Token startToken,int endDepth) {
+    std::vector<Statement*> statements;
+    Token token = startToken;
+    while(token.getType()!=TokenType::TOKEN_RIGHT_CURLY || currentDepth>endDepth) {
+        Statement * statement = this->parseToken(token);
+        statements.push_back(statement);
+        token = this->getCurrentToken();
+
+
+    }
+    return statements;
 }

@@ -38,6 +38,8 @@ private:
     Expression *right;
     Operation operation;
 
+    std::string getType() override;
+
 };
 
 

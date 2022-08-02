@@ -3,3 +3,7 @@
 //
 
 #include "Return.h"
+
+std::string Return::getType() {
+    return "Return";
+}

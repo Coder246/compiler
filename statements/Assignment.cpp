@@ -3,3 +3,7 @@
 //
 
 #include "Assignment.h"
+
+std::string Assignment::getType() {
+    return "Assignment";
+}

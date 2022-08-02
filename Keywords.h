@@ -7,27 +7,27 @@
 
 #include "Keyword.h"
 
-Keyword KEYWORD_IF = Keyword("if");
-Keyword KEYWORD_ELSE = Keyword("else");
-Keyword KEYWORD_WHILE = Keyword("while");
-Keyword KEYWORD_DO = Keyword("do");
-Keyword KEYWORD_FOR = Keyword("for");
-Keyword KEYWORD_RETURN = Keyword("return");
-Keyword KEYWORD_BREAK = Keyword("break");
-Keyword KEYWORD_CONTINUE = Keyword("continue");
-Keyword KEYWORD_FUNCTION = Keyword("function");
-Keyword KEYWORD_VAR = Keyword("var");
-Keyword KEYWORD_TRUE = Keyword("true");
-Keyword KEYWORD_FALSE = Keyword("false");
-Keyword KEYWORD_NULL = Keyword("null");
-Keyword KEYWORD_NEW = Keyword("new");
-Keyword KEYWORD_THIS = Keyword("this");
-Keyword KEYWORD_CLASS = Keyword("class");
-Keyword KEYWORD_VOID = Keyword("void");
+static Keyword KEYWORD_IF = Keyword("if");
+static Keyword KEYWORD_ELSE = Keyword("else");
+static Keyword KEYWORD_WHILE = Keyword("while");
+static Keyword KEYWORD_DO = Keyword("do");
+static Keyword KEYWORD_FOR = Keyword("for");
+static Keyword KEYWORD_RETURN = Keyword("return");
+static Keyword KEYWORD_BREAK = Keyword("break");
+static Keyword KEYWORD_CONTINUE = Keyword("continue");
+static Keyword KEYWORD_FUNCTION = Keyword("function");
+static Keyword KEYWORD_VAR = Keyword("var");
+static Keyword KEYWORD_TRUE = Keyword("true");
+static Keyword KEYWORD_FALSE = Keyword("false");
+static Keyword KEYWORD_NULL = Keyword("null");
+static Keyword KEYWORD_NEW = Keyword("new");
+static Keyword KEYWORD_THIS = Keyword("this");
+static Keyword KEYWORD_CLASS = Keyword("class");
+static Keyword KEYWORD_VOID = Keyword("void");
 
 
 //array of all keywords
-Keyword *KEYWORDS[] = {
+static Keyword *KEYWORDS[] = {
         &KEYWORD_IF,
         &KEYWORD_ELSE,
         &KEYWORD_WHILE,

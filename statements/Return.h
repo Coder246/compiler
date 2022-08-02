@@ -7,10 +7,14 @@
 
 
 #include "../expressions/Expression.h"
+#include "Statement.h"
 
-class Return {
+class Return: public Statement {
 private:
     Expression *expression;
+
+    std::string getType() override;
+
 };
 
 

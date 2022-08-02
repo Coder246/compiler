@@ -3,3 +3,7 @@
 //
 
 #include "Variable.h"
+
+std::string Variable::getType() {
+    return "Variable";
+}

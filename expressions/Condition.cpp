@@ -30,3 +30,7 @@ Operation Condition::getOperation() const {
 void Condition::setOperation(Operation operation) {
     Condition::operation = operation;
 }
+
+std::string Condition::getType() {
+    return "Condition";
+}

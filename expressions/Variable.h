@@ -12,7 +12,7 @@
 class Variable: public Expression {
 
 private:
-
+    std::string getType() override;
 
 };
 

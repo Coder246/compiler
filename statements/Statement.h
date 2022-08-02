@@ -6,8 +6,11 @@
 #define COMPILER_STATEMENT_H
 
 
-class Statement {
+#include <string>
 
+class Statement {
+public:
+    virtual std::string getType() = 0;
 };
 
 

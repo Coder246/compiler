@@ -14,6 +14,8 @@ class Assignment: public Statement {
 private:
     Variable *variable;
     Expression *expression;
+
+    std::string getType() override;
 };
 
 
