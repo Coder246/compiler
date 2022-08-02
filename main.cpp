@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
 
         Lexer lexer;
         lexer.lex(file_contents);
+        lexer.printTokens();
 
 
     }

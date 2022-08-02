@@ -1,6 +1,11 @@
 {
+void test() {
+
+}
+
+
 void main() {
-    if(int i=0;i<10;i++)
+    if(int i=0;i<10e6;i++)
     {
         if(i==5)
         {
@@ -12,10 +17,10 @@ void main() {
         }
     }
 
+    test();
 
 }
 }
 
-//}
 
 

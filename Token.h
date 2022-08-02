@@ -11,13 +11,21 @@
 
 class Token {
 public:
-    Token(TokenType type, std::string value);
+    Token(TokenType type, std::string value, int line, int pos);
     TokenType getType();
+    std::string toString();
+    std::string TokenTypeToString(TokenType type);
 
 private:
     TokenType type;
     std::string value;
+    int line,pos;
+public:
+    const std::string &getValue() const;
 
+    int getLine() const;
+
+    int getPos() const;
 
 
 };
