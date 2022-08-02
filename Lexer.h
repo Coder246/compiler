@@ -21,7 +21,7 @@ public:
         std::stack<Token> braceStack;
         int counter = 0;
         int length = 0;
-        char nextToken();
+        char nextChar();
         void next();
         void addToken(TokenType type, std::string value);
         std::string getUntil(char end, bool LFStop = false);
@@ -29,6 +29,9 @@ public:
         std::string source;
         int pos = 0;
         int line = 1;
+        void skipLine();
+
+    char currentChar();
 };
 
 

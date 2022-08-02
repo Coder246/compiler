@@ -11,7 +11,7 @@ void Lexer::lex(const std::string &input) {
     this->source = input;
 
     while (this->counter < this->length) {
-        char c = this->nextToken();
+        char c = this->currentChar();
         if (c == ' ' || c == '\n' || c == '\t') {
             this->next();
         } else if (c == '{') {
@@ -42,6 +42,16 @@ void Lexer::lex(const std::string &input) {
             this->addToken(TokenType::TOKEN_RIGHT_SQUARE_BRACKET, "[");
             this->next();
 
+        } else if(c == '/') {
+            if(this->nextChar()=='/') {
+                this->skipLine();
+            } else {
+                this->addToken(TokenType::TOKEN_SLASH, "/");
+                this->next();
+            }
+
+
+
         }else {
             this->next();
 
@@ -71,8 +81,8 @@ void Lexer::printTokens(std::ostream &out) {
 
 }
 
-char Lexer::nextToken() {
-    char c = this->source[this->counter];
+char Lexer::nextChar() {
+    char c = this->source[this->counter+1];
     return c;
 }
 
@@ -124,5 +134,16 @@ void Lexer::checkBraceStack(char brace, bool isLeft, TokenType tokenType, TokenT
         }
     }
 
+}
+
+void Lexer::skipLine() {
+    while (this->source[this->counter] != '\n') {
+        this->next();
+    }
+}
+
+char Lexer::currentChar() {
+    char c = this->source[this->counter];
+    return c;
 }
 
