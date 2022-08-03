@@ -32,6 +32,10 @@ Statement * Parser::IFStatementParser(Token iftoken) {
     next();
     if(this->getCurrentToken().getType()!=TokenType::TOKEN_LEFT_BRACKET) std::cout << "Error: ( expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
     next();
+    //todo expression parser
+   // Condition * condition = new Condition(this->parseExpression());
+
+
     Condition* condition = this->parseCondition(this->getCurrentToken());
     next();
     if(this->getCurrentToken().getType()!=TokenType::TOKEN_RIGHT_BRACKET) std::cout << "Error: ) expected at " << getCurrentToken().getLine() << ":" << getCurrentToken().getPos() << std::endl;
@@ -60,6 +64,14 @@ Statement * Parser::IFStatementParser(Token iftoken) {
     }
 
 }
+
+Statement * Parser::RETURNStatementParser(Token token) {
+    std::cout << "RETURNStatementParser" << std::endl;
+
+    next();
+    next();
+}
+
 
 Condition *Parser::parseCondition(Token token) {
 
@@ -126,7 +138,12 @@ Statement * Parser::parseToken(Token token) {
     if(token.getType() == TokenType::TOKEN_KEYWORD) {
 
         if(token.getValue() == "if") {
-           return this->IFStatementParser(token);
+            return this->IFStatementParser(token);
+
+        }else if(token.getValue() == "return") {
+
+          return RETURNStatementParser(token);
+
         }else{
             std::cout << "Error: " << token.getValue() << " is not implemented " << token.getLine() << ":" << token.getPos() << std::endl;
             next();
@@ -163,3 +180,47 @@ std::vector<Statement*> Parser::parseUntilCurlyBracket(Token startToken,int endD
     }
     return statements;
 }
+
+Expression* Parser::parseExpression() {
+
+    if(getCurrentToken().getType()==TokenType::TOKEN_NUMBER) {
+        Constant * constant = new Constant(std::stoi(getCurrentToken().getValue()));
+        next();
+        return constant;
+    }
+
+}
+
+
+Expression *Parser::parseAddSubExpr() {
+
+    Expression * expr = this->parseMulDivExpr();
+    Token token = this->getCurrentToken();
+
+
+
+    return nullptr;
+}
+
+Expression *Parser::parseMulDivExpr() {
+    return nullptr;
+}
+
+Expression *Parser::parsePowExpr() {
+    return nullptr;
+}
+
+Expression *Parser::parseAtomExpr() {
+    return nullptr;
+}
+
+Token Parser::getNextToken() {
+    if(this->counter+1>=this->tokens.size())
+        return Token(TokenType::TOKEN_EOF,"",0,0);
+
+    return this->tokens.at(this->counter+1);
+}
+
+
+
+

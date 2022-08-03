@@ -22,13 +22,20 @@ private:
    std::vector<Token> tokens;
    int counter;
    void next();
+   Token getNextToken();
    Token getCurrentToken();
    Token * currentToken;
     std::vector<Statement*> parseUntilCurlyBracket(Token startToken,int endDept);
    int currentDepth;
    Statement * parseToken(Token token);
+   Statement * RETURNStatementParser(Token token);
 
+    Expression *parseExpression();
 
+    Expression *parseAddSubExpr();
+    Expression *parseMulDivExpr();
+    Expression *parsePowExpr();
+    Expression *parseAtomExpr();
 };
 
 
